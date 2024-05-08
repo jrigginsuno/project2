@@ -47,5 +47,14 @@ class Grader:
         self.__scores[index] = score
         # print(score)
 
+    def set_name(self, name: str):
+        if name == '':
+            raise ValueError('No Name')
+        else:
+            self.__name = name
+
     def clear(self):
-        pass
+        self.__name = ''
+        self.__attempts = 0
+        for _ in range(len(self.__scores)):
+            self.__scores[_] = 0

@@ -60,6 +60,10 @@ class Gui(tk.Tk):
         self.frame.label_result.config(fg='red')
         self.frame.label_result.grid_forget()
 
+    def submit_form(self):
+        self.submit_score()
+        self.submit_name()
+
     def submit_score(self):
         try:
             for _ in range(self.entry.get_attempt_count()):
@@ -67,6 +71,11 @@ class Gui(tk.Tk):
         except ValueError:
             self.show_result('Value of Scores must be between 0 and 100', 1)
 
+    def submit_name(self):
+        try:
+            self.entry.set_name(self.frame.entry_student.get())
+        except ValueError:
+            self.show_result('Name must be entered', 1)
 
 # class MainFrame(tk.Frame):
 # 	def __init__(self, parent, controller):
@@ -105,7 +114,7 @@ class InputFrame(tk.Frame):
             self.label_scores[_].grid_forget()
             self.entry_scores[_].grid_forget()
 
-        self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_score())
+        self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_form())
         self.button_submit.grid(columnspan=2, row=6)
 
         self.label_result = tk.Label(self, fg='red')
