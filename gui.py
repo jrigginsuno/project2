@@ -28,15 +28,17 @@ class Gui(tk.Tk):
     def show_attempts(self, *args):
         # print(self.frame.num_attempts.get())
         try:
-            self.entry.set_attempt(self.frame.num_attempts.get())
-            print(len(self.frame.label_scores))
-            for _ in range(self.entry.get_attempt()):
+            self.clear_result()
+            self.entry.set_attempt_count(self.frame.num_attempts.get())
+            # print(len(self.frame.label_scores))
+            for _ in range(self.entry.get_attempt_count()):
                 self.frame.label_scores[_].grid(column=0, row=_ + 2)
                 self.frame.entry_scores[_].grid(column=1, row=_ + 2)
 
         except ValueError as e:
             self.clear_attempts()
-            print(f'Error = {e}')
+            self.show_result('Number of attempts is invalid', 1)
+            # print(f'Error = {e}')
         except TypeError:
             print('Type Error')
 
@@ -44,6 +46,26 @@ class Gui(tk.Tk):
         for _ in range(4):
             self.frame.label_scores[_].grid_forget()
             self.frame.entry_scores[_].grid_forget()
+
+    def show_result(self, message, is_error):
+        self.frame.label_result.grid(columnspan=2, row=7)
+        if is_error:
+            self.frame.label_result.grid()
+            self.frame.label_result.config(fg='red')
+        else:
+            self.frame.label_result.config(fg='green')
+        self.frame.label_result.config(text=message)
+
+    def clear_result(self):
+        self.frame.label_result.config(fg='red')
+        self.frame.label_result.grid_forget()
+
+    def submit_score(self):
+        try:
+            for _ in range(self.entry.get_attempt_count()):
+                self.entry.set_score_value(self.frame.entry_scores[_].get(), _)
+        except ValueError:
+            self.show_result('Value of Scores must be between 0 and 100', 1)
 
 
 # class MainFrame(tk.Frame):
@@ -83,11 +105,13 @@ class InputFrame(tk.Frame):
             self.label_scores[_].grid_forget()
             self.entry_scores[_].grid_forget()
 
-        self.button_submit = tk.Button(self, text='Submit')
+        self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_score())
         self.button_submit.grid(columnspan=2, row=6)
 
-        self.label_result = tk.Label(self, text='result', fg='red')
+        self.label_result = tk.Label(self, fg='red')
         self.label_result.grid(columnspan=2, row=7)
+        self.label_result.grid_forget()
+
 
 
 class ResultPage(tk.Frame):
