@@ -18,14 +18,32 @@ class Gui(tk.Tk):
         self.frame.pack(pady=10)
 
     def handle_user_input(self):
-        # try:
-        self.frame.num_attempts.trace_add('write', self.show_attempts)
-        # except:
-        #     pass
+        try:
+            self.frame.num_attempts.trace_add('write', self.show_attempts)
+        except ValueError as e:
+            print('user value error')
+        except TypeError:
+            print('Type Error')
 
     def show_attempts(self, *args):
-        print(self.frame.num_attempts.get())
-        self.entry.set_attempt()
+        # print(self.frame.num_attempts.get())
+        try:
+            self.entry.set_attempt(self.frame.num_attempts.get())
+            print(len(self.frame.label_scores))
+            for _ in range(self.entry.get_attempt()):
+                self.frame.label_scores[_].grid(column=0, row=_ + 2)
+                self.frame.entry_scores[_].grid(column=1, row=_ + 2)
+
+        except ValueError as e:
+            self.clear_attempts()
+            print(f'Error = {e}')
+        except TypeError:
+            print('Type Error')
+
+    def clear_attempts(self):
+        for _ in range(4):
+            self.frame.label_scores[_].grid_forget()
+            self.frame.entry_scores[_].grid_forget()
 
 
 # class MainFrame(tk.Frame):
@@ -57,16 +75,19 @@ class InputFrame(tk.Frame):
         self.label_scores = []
         self.entry_scores = []
         for _ in range(4):
-            self.label_scores.append(tk.Label(self, text=f'Score {_}:'))
+            self.label_scores.append(tk.Label(self, text=f'Score {_+1}:'))
             self.entry_scores.append(tk.Entry(self))
             self.label_scores[_].grid(column=0, row=_+2)
             self.entry_scores[_].grid(column=1, row=_+2)
 
-            # self.label_scores[_].grid_forget()
-            # self.entry_scores[_].grid_forget()
+            self.label_scores[_].grid_forget()
+            self.entry_scores[_].grid_forget()
 
         self.button_submit = tk.Button(self, text='Submit')
         self.button_submit.grid(columnspan=2, row=6)
+
+        self.label_result = tk.Label(self, text='result', fg='red')
+        self.label_result.grid(columnspan=2, row=7)
 
 
 class ResultPage(tk.Frame):
