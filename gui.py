@@ -11,41 +11,19 @@ class Gui(tk.Tk):
         self.container.pack()
         self.__create_widgets()
 
-        self.handle_user_input()
-
     def __create_widgets(self):
         self.frame = InputFrame(self.container, self)
         self.frame.pack(pady=10)
 
     def handle_user_input(self):
         try:
-            self.frame.num_attempts.trace_add('write', self.show_attempts)
+            # self.frame.num_attempts.trace_add('write', self.show_attempts)
+            # self.frame.num_attempts.trace_add('write', self.show_attempts)
+            pass
         except ValueError as e:
             print('user value error')
         except TypeError:
             print('Type Error')
-
-    def show_attempts(self, *args):
-        # print(self.frame.num_attempts.get())
-        try:
-            self.clear_result()
-            self.entry.set_attempt_count(self.frame.num_attempts.get())
-            # print(len(self.frame.label_scores))
-            for _ in range(self.entry.get_attempt_count()):
-                self.frame.label_scores[_].grid()
-                self.frame.entry_scores[_].grid()
-
-        except ValueError as e:
-            self.clear_attempts()
-            self.show_result('Number of attempts is invalid', 1)
-            # print(f'Error = {e}')
-        except TypeError:
-            print('Type Error')
-
-    def clear_attempts(self):
-        for _ in range(4):
-            self.frame.label_scores[_].grid_remove()
-            self.frame.entry_scores[_].grid_remove()
 
     def show_result(self, message, is_error):
         self.frame.label_result.grid(columnspan=2, row=7)
@@ -87,6 +65,12 @@ class InputFrame(tk.Frame):
         super().__init__(parent)
         self.controller = controller
 
+        self.__num_attempts: tk.StringVar = tk.StringVar()
+        self.__num_attempts.trace_add('write', self.show_attempts)
+
+        self.__create_widgets()
+
+    def __create_widgets(self):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
 
@@ -95,11 +79,9 @@ class InputFrame(tk.Frame):
         self.label_student.grid(column=0, row=0)
         self.entry_student.grid(column=1, row=0)
 
-        self.num_attempts = tk.StringVar()
-        self.num_attempts.set('')
-
         self.label_attempts = tk.Label(self, text='No. of attempts:')
-        self.entry_attempts = tk.Entry(self, textvariable=self.num_attempts)
+        self.entry_attempts = tk.Entry(self, textvariable=self.__num_attempts)
+
         self.label_attempts.grid(column=0, row=1)
         self.entry_attempts.grid(column=1, row=1)
 
@@ -120,6 +102,28 @@ class InputFrame(tk.Frame):
         self.label_result = tk.Label(self, fg='red')
         self.label_result.grid(columnspan=2, row=7)
         self.label_result.grid_remove()
+
+    def get_attempts(self) -> int:
+        num: int = int(self.__num_attempts.get())
+        print(num)
+        if num < 1 or num > 4:
+            raise ValueError
+        else:
+            return num
+
+    def show_attempts(self, *args) -> None:
+        try:
+            num: int = self.get_attempts()
+            for _ in range(num):
+                self.label_scores[_].grid()
+                self.entry_scores[_].grid()
+        except ValueError:
+            self.clear_attempts()
+
+    def clear_attempts(self):
+        for _ in range(4):
+            self.label_scores[_].grid_remove()
+            self.entry_scores[_].grid_remove()
 
 
 class ResultPage(tk.Frame):
