@@ -25,14 +25,21 @@ class Gui(tk.Tk):
         except TypeError:
             print('Type Error')
 
-    def show_result(self, message, is_error):
-        self.frame.label_result.grid(columnspan=2, row=7)
-        if is_error:
-            self.frame.label_result.grid()
-            self.frame.label_result.config(fg='red')
+    def show_result(self, error: Exception = None) -> None:
+        """
+        Method to show if given user inputs are valid.
+
+        If this method is called with no argument no error will be displayed and will have green text
+        If there is a given argument that exception will be displayed with red text.
+        :param error: Value of an exception. Default is none
+        :return:
+        """
+
+        if error:
+            self.frame.label_result.config(fg='red', text=str(error))
         else:
-            self.frame.label_result.config(fg='green')
-        self.frame.label_result.config(text=message)
+            self.frame.label_result.config(fg='green', text='Submitted')
+        self.frame.label_result.grid(columnspan=2, row=7)
 
     def clear_result(self):
         self.frame.label_result.config(fg='red')
