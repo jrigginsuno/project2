@@ -52,10 +52,10 @@ class Gui(tk.Tk):
             print(f'Num Attempts: {self.frame.get_attempts()}')
             print(f'Scores: {self.frame.get_scores()}')
         except ValueError as e:
-            self.show_result(e, 1)
-            print(f'Value Error: {e}')
+            self.show_result(e)
         else:
-            self.show_result('Submitted', 0)
+            self.frame.clear_entries()
+            self.show_result()
 
     # Still Keeps these just in case
     # def submit_form(self):
