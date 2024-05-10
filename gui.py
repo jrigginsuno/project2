@@ -41,11 +41,11 @@ class Gui(tk.Tk):
     def submit(self):
         # self.entry.set_name(self.frame.get_name())
         try:
-            print(self.frame.get_name())
-            print(self.frame.get_attempts())
+            print(f'Name: {self.frame.get_name()}')
+            print(f'Num Attempts: {self.frame.get_attempts()}')
+            print(f'Scores: {self.frame.get_scores()}')
         except ValueError as e:
             print(f'Value Error: {e}')
-
 
     # Still Keeps these just in case
     # def submit_form(self):
@@ -79,7 +79,8 @@ class InputFrame(tk.Frame):
         self.__num_attempts.trace_add('write', self.show_attempts)
 
         self.__name: tk.StringVar = tk.StringVar()
-        self.__scores: list[int] = []
+
+        self.__scores: list[tk.StringVar] = [tk.StringVar()] * 4
 
         self.__create_widgets()
 
@@ -98,8 +99,9 @@ class InputFrame(tk.Frame):
         self.label_attempts.grid(column=0, row=1)
         self.entry_attempts.grid(column=1, row=1)
 
-        self.label_scores = []
-        self.entry_scores = []
+        # self.label_scores = []
+        self.label_scores: list[tk.Label] = []
+        self.entry_scores: list[tk.Entry] = []
         for _ in range(4):
             self.label_scores.append(tk.Label(self, text=f'Score {_+1}:'))
             self.entry_scores.append(tk.Entry(self))
@@ -159,8 +161,24 @@ class InputFrame(tk.Frame):
         else:
             return name
 
+    def get_scores(self) -> list[int]:
+        """
+        Method to get scores from entries and return that as a list.
+        :return: List of integers of scores.
+        """
+        try:
+            scores: list[int] = []
+            for _ in range(self.get_attempts()):
+                scores.append(int(self.entry_scores[_].get()))
+                if scores[_] < 0 or scores[_] > 100:
+                    raise ValueError
+            return scores
+        except ValueError:
+            raise ValueError('Attempts needs to be a number between 0 and 100')
 
-
+    # TODO
+    def clear_entries(self):
+        pass
 
 class ResultPage(tk.Frame):
     def __init__(self, parent, controller):
