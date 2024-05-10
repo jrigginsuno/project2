@@ -45,7 +45,10 @@ class Gui(tk.Tk):
             print(f'Num Attempts: {self.frame.get_attempts()}')
             print(f'Scores: {self.frame.get_scores()}')
         except ValueError as e:
+            self.show_result(e, 1)
             print(f'Value Error: {e}')
+        else:
+            self.show_result('Submitted', 0)
 
     # Still Keeps these just in case
     # def submit_form(self):
@@ -105,6 +108,7 @@ class InputFrame(tk.Frame):
         for _ in range(4):
             self.label_scores.append(tk.Label(self, text=f'Score {_+1}:'))
             self.entry_scores.append(tk.Entry(self))
+
             self.label_scores[_].grid(column=0, row=_+2)
             self.entry_scores[_].grid(column=1, row=_+2)
 
@@ -179,6 +183,7 @@ class InputFrame(tk.Frame):
     # TODO
     def clear_entries(self):
         pass
+
 
 class ResultPage(tk.Frame):
     def __init__(self, parent, controller):
