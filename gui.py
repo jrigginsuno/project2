@@ -183,9 +183,15 @@ class InputFrame(tk.Frame):
         except ValueError:
             raise ValueError('Attempts needs to be a number between 0 and 100')
 
-    # TODO
-    def clear_entries(self):
-        pass
+    def clear_entries(self) -> None:
+        """
+        Method that clears all entry boxes
+        :return:
+        """
+        self.__num_attempts.set('')
+        self.entry_student.delete(0, 'end')
+        for _ in self.entry_scores:
+            _.delete(0, 'end')
 
 
 class ResultPage(tk.Frame):
