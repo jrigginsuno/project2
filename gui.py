@@ -88,10 +88,6 @@ class InputFrame(tk.Frame):
         self.__num_attempts: tk.StringVar = tk.StringVar()
         self.__num_attempts.trace_add('write', self.show_attempts)
 
-        self.__name: tk.StringVar = tk.StringVar()
-
-        self.__scores: list[tk.StringVar] = [tk.StringVar()] * 4
-
         self.__create_widgets()
 
     def __create_widgets(self) -> None:
@@ -99,7 +95,7 @@ class InputFrame(tk.Frame):
         self.columnconfigure(1, weight=2)
 
         self.label_student = tk.Label(self, text='Student name:')
-        self.entry_student = tk.Entry(self, textvariable=self.__name)
+        self.entry_student: tk.Entry = tk.Entry(self)
         self.label_student.grid(column=0, row=0)
         self.entry_student.grid(column=1, row=0)
 
@@ -166,7 +162,7 @@ class InputFrame(tk.Frame):
         Method to get the name of student from entry.
         :return: Name of student.
         """
-        name: str = self.__name.get()
+        name: str = self.entry_student.get()
         if not name:
             raise ValueError('Name is empty')
         else:
