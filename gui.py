@@ -38,22 +38,32 @@ class Gui(tk.Tk):
         self.frame.label_result.config(fg='red')
         self.frame.label_result.grid_remove()
 
-    def submit_form(self):
-        self.submit_score()
-        self.submit_name()
-
-    def submit_score(self):
+    def submit(self):
+        # self.entry.set_name(self.frame.get_name())
         try:
-            for _ in range(self.entry.get_attempt_count()):
-                self.entry.set_score_value(self.frame.entry_scores[_].get(), _)
-        except ValueError:
-            self.show_result('Value of Scores must be between 0 and 100', 1)
+            print(self.frame.get_name())
+            print(self.frame.get_attempts())
+        except ValueError as e:
+            print(f'Value Error: {e}')
 
-    def submit_name(self):
-        try:
-            self.entry.set_name(self.frame.entry_student.get())
-        except ValueError:
-            self.show_result('Name must be entered', 1)
+
+    # Still Keeps these just in case
+    # def submit_form(self):
+    #     self.submit_score()
+    #     self.submit_name()
+    #
+    # def submit_score(self):
+    #     try:
+    #         for _ in range(self.entry.get_attempt_count()):
+    #             self.entry.set_score_value(self.frame.entry_scores[_].get(), _)
+    #     except ValueError:
+    #         self.show_result('Value of Scores must be between 0 and 100', 1)
+    #
+    # def submit_name(self):
+    #     try:
+    #         self.entry.set_name(self.frame.entry_student.get())
+    #     except ValueError:
+    #         self.show_result('Name must be entered', 1)
 
 # class MainFrame(tk.Frame):
 # 	def __init__(self, parent, controller):
@@ -68,14 +78,17 @@ class InputFrame(tk.Frame):
         self.__num_attempts: tk.StringVar = tk.StringVar()
         self.__num_attempts.trace_add('write', self.show_attempts)
 
+        self.__name: tk.StringVar = tk.StringVar()
+        self.__scores: list[int] = []
+
         self.__create_widgets()
 
-    def __create_widgets(self):
+    def __create_widgets(self) -> None:
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
 
         self.label_student = tk.Label(self, text='Student name:')
-        self.entry_student = tk.Entry(self)
+        self.entry_student = tk.Entry(self, textvariable=self.__name)
         self.label_student.grid(column=0, row=0)
         self.entry_student.grid(column=1, row=0)
 
@@ -96,7 +109,11 @@ class InputFrame(tk.Frame):
             self.label_scores[_].grid_remove()
             self.entry_scores[_].grid_remove()
 
-        self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_form())
+        # This uses old self.controller.submit_form() method
+        # self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_form())
+
+        self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit())
+
         self.button_submit.grid(columnspan=2, row=6)
 
         self.label_result = tk.Label(self, fg='red')
@@ -104,10 +121,16 @@ class InputFrame(tk.Frame):
         self.label_result.grid_remove()
 
     def get_attempts(self) -> int:
-        num: int = int(self.__num_attempts.get())
-        print(num)
-        if num < 1 or num > 4:
-            raise ValueError
+        """
+        Method to return the amount of attempts taken if input is valid.
+        :return: The amount of attempts taken.
+        """
+        try:
+            num: int = int(self.__num_attempts.get())
+            if num < 1 or num > 4:
+                raise ValueError
+        except ValueError:
+            raise ValueError('Attempts needs to be a number between 1 and 4')
         else:
             return num
 
@@ -124,6 +147,19 @@ class InputFrame(tk.Frame):
         for _ in range(4):
             self.label_scores[_].grid_remove()
             self.entry_scores[_].grid_remove()
+
+    def get_name(self) -> str:
+        """
+        Method to get the name of student from entry.
+        :return: Name of student.
+        """
+        name: str = self.__name.get()
+        if not name:
+            raise ValueError('Name is empty')
+        else:
+            return name
+
+
 
 
 class ResultPage(tk.Frame):
