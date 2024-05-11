@@ -141,7 +141,7 @@ class InputFrame(tk.Frame):
                     raise ValueError
             return scores
         except ValueError:
-            raise ValueError('Attempts needs to be a number between 0 and 100')
+            raise ValueError('Scores needs to be a number between 0 and 100')
 
     def clear_entries(self) -> None:
         """Method that clears all entry boxes"""
