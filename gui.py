@@ -144,18 +144,22 @@ class InputFrame(tk.Frame):
             return num
 
     def show_attempts(self, *args) -> None:
-        try:
-            num: int = self.get_attempts()
-            for _ in range(num):
-                self.label_scores[_].grid()
-                self.entry_scores[_].grid()
-        except ValueError:
-            self.clear_attempts()
+        """
+        Dynamically adds label and entry to grid depending on the number of attempts given.
+        If attempts are invalid all grid items are removed.
 
-    def clear_attempts(self):
-        for _ in range(4):
-            self.label_scores[_].grid_remove()
-            self.entry_scores[_].grid_remove()
+        :param args:
+        :return:
+        """
+
+        try:
+            for label, entry, _ in zip(self.label_scores, self.entry_scores, range(self.get_attempts())):
+                label.grid()
+                entry.grid()
+        except ValueError:
+            for label, entry in zip(self.label_scores, self.entry_scores):
+                label.grid_remove()
+                entry.grid_remove()
 
     def get_name(self) -> str:
         """
