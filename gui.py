@@ -44,6 +44,7 @@ class Gui(tk.Tk):
             self.student.set_scores(list(map(lambda x: int(x.get()),
                                              self.frame.entry_scores[:self.frame.get_attempts()])))
             self.student.enter_grade()
+            self.student.clear()
         except ValueError as e:
             self.show_result(e)
         else:

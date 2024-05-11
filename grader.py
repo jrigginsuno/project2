@@ -39,9 +39,10 @@ class Student:
         except ValueError:
             raise ValueError('Attempts needs to be a number between 0 and 100')
 
-    # TODO
-    def clear(self):
+    def clear(self) -> None:
+        """Set variables back to default values"""
         self.__name = ''
         self.__attempts = 0
         for _ in range(len(self.__scores)):
             self.__scores[_] = 0
+        self.__scores = [0] * 4
