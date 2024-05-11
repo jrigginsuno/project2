@@ -8,31 +8,12 @@ class Student:
         """
         self.__name: str = ''
         self.__attempts: int = 0
-        # self.__scores: List[int] = [0, 0, 0, 0]
-        self.__scores: List[int] = []
+        self.__scores: list[int] = [0] * 4
 
     @staticmethod
     def check_number(num: int) -> None:
         if num < 0:
             raise ValueError('Negative')
-
-    def check_score(self, score: int) -> None:
-        self.check_number(score)
-        if score > 100:
-            raise ValueError('Out of score range')
-
-    def set_score_value(self, score_str: str, index: int) -> None:
-        """
-        Sets the value of an element in the score list
-        :param score_str: String that is cast to int
-        :param index: Index of list for where score is being written to
-        :return:
-        """
-
-        score: int = int(score_str)
-        self.check_score(score)
-        self.__scores[index] = score
-        # print(score)
 
     def get_name(self) -> str:
         """Getter method for name."""
@@ -45,6 +26,25 @@ class Student:
         else:
             raise ValueError('Name is empty')
 
+    def get_scores(self) -> list[int]:
+        """"Getter method for scores."""
+        return self.__scores
+
+    def set_scores(self, scores: list[str]) -> None:
+        """Setter method for scores."""
+        # self.__scores = enumerate(scores)
+        print(self.__scores)
+        print(len(scores))
+        try:
+            for i, val in enumerate(scores):
+                val = int(val)
+                if val < 0 or val > 100:
+                    raise ValueError
+                self.__scores[i] = val
+        except ValueError:
+            raise ValueError('Attempts needs to be a number between 0 and 100')
+
+    # TODO
     def clear(self):
         self.__name = ''
         self.__attempts = 0
