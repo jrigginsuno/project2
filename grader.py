@@ -43,6 +43,20 @@ class Student:
         """Set variables back to default values"""
         self.__name = ''
         self.__attempts = 0
-        for _ in range(len(self.__scores)):
-            self.__scores[_] = 0
         self.__scores = [0] * 4
+
+    def enter_grade(self) -> None:
+        with open('file.csv', 'a', newline='') as csvfile:
+            content = csv.writer(csvfile)
+
+            # Add header if file does not exist
+            if not self.__file_exists:
+                content.writerow(['Name', 'Score 1', 'Score 2', 'Score 3', 'Score 4', 'Final'])
+                self.__file_exists = True
+
+            # Put all values into list for writing into csv file
+            row: list = [self.__name]
+            row.extend(self.__scores)
+            row.append(max(self.__scores))
+
+            content.writerow(row)
