@@ -12,11 +12,6 @@ class Student:
         # Check if file.csv already exists
         self.__file_exists: bool = os.path.isfile('file.csv')
 
-    @staticmethod
-    def check_number(num: int) -> None:
-        if num < 0:
-            raise ValueError('Negative')
-
     def get_name(self) -> str:
         """Getter method for name."""
         return self.__name
