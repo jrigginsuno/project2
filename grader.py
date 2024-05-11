@@ -3,9 +3,7 @@ from typing import List
 
 class Student:
     def __init__(self) -> None:
-        """
-        Method to set default values
-        """
+        """Method to set default values"""
         self.__name: str = ''
         self.__attempts: int = 0
         self.__scores: list[int] = [0] * 4
@@ -27,14 +25,11 @@ class Student:
             raise ValueError('Name is empty')
 
     def get_scores(self) -> list[int]:
-        """"Getter method for scores."""
+        """Getter method for scores."""
         return self.__scores
 
     def set_scores(self, scores: list[str]) -> None:
         """Setter method for scores."""
-        # self.__scores = enumerate(scores)
-        print(self.__scores)
-        print(len(scores))
         try:
             for i, val in enumerate(scores):
                 val = int(val)

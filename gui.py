@@ -41,10 +41,9 @@ class Gui(tk.Tk):
     def submit(self):
         try:
             self.student.set_name(self.frame.entry_student.get())
-            print(f'Name: {self.student.get_name()}')
             self.student.set_scores(list(map(lambda x: int(x.get()),
                                              self.frame.entry_scores[:self.frame.get_attempts()])))
-            print(f'scores: {self.student.get_scores()}')
+            self.student.enter_grade()
         except ValueError as e:
             self.show_result(e)
         else:
@@ -77,7 +76,6 @@ class InputFrame(tk.Frame):
         self.label_attempts.grid(column=0, row=1)
         self.entry_attempts.grid(column=1, row=1)
 
-        # self.label_scores = []
         self.label_scores: list[tk.Label] = []
         self.entry_scores: list[tk.Entry] = []
         for _ in range(4):
@@ -154,9 +152,3 @@ class InputFrame(tk.Frame):
         self.entry_student.delete(0, 'end')
         for _ in self.entry_scores:
             _.delete(0, 'end')
-
-
-class ResultPage(tk.Frame):
-    def __init__(self, parent, controller):
-
-        super().__init__(parent)
