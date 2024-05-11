@@ -42,7 +42,7 @@ class Gui(tk.Tk):
         try:
             self.student.set_name(self.frame.entry_student.get())
             print(f'Name: {self.student.get_name()}')
-            self.student.set_scores(list(map(lambda x: x.get(),
+            self.student.set_scores(list(map(lambda x: int(x.get()),
                                              self.frame.entry_scores[:self.frame.get_attempts()])))
             print(f'scores: {self.student.get_scores()}')
         except ValueError as e:
