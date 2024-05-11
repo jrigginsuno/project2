@@ -1,11 +1,11 @@
 import tkinter as tk
-from grader import Grader
+from grader import Student
 
 
 class Gui(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.entry = Grader()
+        self.student = Student()
 
         self.container = tk.Frame(self)
         self.container.pack()
@@ -46,7 +46,6 @@ class Gui(tk.Tk):
         self.frame.label_result.grid_remove()
 
     def submit(self):
-        # self.entry.set_name(self.frame.get_name())
         try:
             print(f'Name: {self.frame.get_name()}')
             print(f'Num Attempts: {self.frame.get_attempts()}')

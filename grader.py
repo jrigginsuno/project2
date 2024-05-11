@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Grader:
+class Student:
     def __init__(self) -> None:
         """
         Method to set default values
