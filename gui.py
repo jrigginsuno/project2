@@ -34,7 +34,7 @@ class Gui(tk.Tk):
     def submit(self) -> None:
         try:
             self.student.set_name(self.frame.entry_student.get())
-            self.student.set_scores(list(map(lambda x: int(x.get()),
+            self.student.set_scores(list(map(lambda x: x.get(),  # It could be worse
                                              self.frame.entry_scores[:self.frame.get_attempts()])))
             self.student.enter_grade()
             self.student.clear()

@@ -27,9 +27,17 @@ class Student:
         """Getter method for scores."""
         return self.__scores
 
-    def set_scores(self, scores: list[int]) -> None:
-        """Setter method for scores."""
+    def set_scores(self, scores: list[str | int]) -> None:
+        """
+        Setter method for scores.
+
+        Takes in list of strings and cast each element to int
+        :param scores: List of strings to be converted to int and then stored to scores
+        """
+
         try:
+            scores = list(map(lambda x: int(x), scores))
+
             for i, val in enumerate(scores):
                 if val < 0 or val > 100:
                     raise ValueError
