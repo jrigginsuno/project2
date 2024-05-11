@@ -15,9 +15,6 @@ class Gui(tk.Tk):
         self.frame = InputFrame(self.container, self)
         self.frame.pack(pady=10)
 
-    def handle_user_input(self):
-        pass
-
     def show_result(self, error: Exception = None) -> None:
         """
         Method to show if given user inputs are valid.
