@@ -1,4 +1,5 @@
-from typing import List
+import os.path
+import csv
 
 
 class Student:
@@ -7,6 +8,9 @@ class Student:
         self.__name: str = ''
         self.__attempts: int = 0
         self.__scores: list[int] = [0] * 4
+
+        # Check if file.csv already exists
+        self.__file_exists: bool = os.path.isfile('file.csv')
 
     @staticmethod
     def check_number(num: int) -> None:
@@ -28,11 +32,10 @@ class Student:
         """Getter method for scores."""
         return self.__scores
 
-    def set_scores(self, scores: list[str]) -> None:
+    def set_scores(self, scores: list[int]) -> None:
         """Setter method for scores."""
         try:
             for i, val in enumerate(scores):
-                val = int(val)
                 if val < 0 or val > 100:
                     raise ValueError
                 self.__scores[i] = val
