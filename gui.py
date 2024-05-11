@@ -5,6 +5,9 @@ from grader import Student
 class Gui(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
+        self.title('Grader')
+        self.geometry('300x200')
+        self.resizable(False, False)
         self.student = Student()
 
         self.container = tk.Frame(self)
