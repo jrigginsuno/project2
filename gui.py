@@ -16,14 +16,7 @@ class Gui(tk.Tk):
         self.frame.pack(pady=10)
 
     def handle_user_input(self):
-        try:
-            # self.frame.num_attempts.trace_add('write', self.show_attempts)
-            # self.frame.num_attempts.trace_add('write', self.show_attempts)
-            pass
-        except ValueError as e:
-            print('user value error')
-        except TypeError:
-            print('Type Error')
+        pass
 
     def show_result(self, error: Exception = None) -> None:
         """
@@ -155,11 +148,7 @@ class InputFrame(tk.Frame):
             raise ValueError('Attempts needs to be a number between 0 and 100')
 
     def clear_entries(self) -> None:
-        """
-        Method that clears all entry boxes
-        :return:
-        """
-
+        """Method that clears all entry boxes"""
         self.__num_attempts.set('')
         self.entry_student.delete(0, 'end')
         for _ in self.entry_scores:
