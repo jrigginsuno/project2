@@ -28,16 +28,22 @@ class Student:
         :param index: Index of list for where score is being written to
         :return:
         """
+
         score: int = int(score_str)
         self.check_score(score)
         self.__scores[index] = score
         # print(score)
 
-    def set_name(self, name: str):
-        if name == '':
-            raise ValueError('No Name')
-        else:
+    def get_name(self) -> str:
+        """Getter method for name."""
+        return self.__name
+
+    def set_name(self, name: str) -> None:
+        """Setter method for name."""
+        if name:
             self.__name = name
+        else:
+            raise ValueError('Name is empty')
 
     def clear(self):
         self.__name = ''

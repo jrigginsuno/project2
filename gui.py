@@ -47,7 +47,8 @@ class Gui(tk.Tk):
 
     def submit(self):
         try:
-            print(f'Name: {self.frame.get_name()}')
+            self.student.set_name(self.frame.entry_student.get())
+            print(f'Name: {self.student.get_name()}')
             print(f'Num Attempts: {self.frame.get_attempts()}')
             print(f'Scores: {self.frame.get_scores()}')
         except ValueError as e:
@@ -136,18 +137,6 @@ class InputFrame(tk.Frame):
             for label, entry in zip(self.label_scores, self.entry_scores):
                 label.grid_remove()
                 entry.grid_remove()
-
-    def get_name(self) -> str:
-        """
-        Method to get the name of student from entry.
-        :return: Name of student.
-        """
-
-        name: str = self.entry_student.get()
-        if not name:
-            raise ValueError('Name is empty')
-        else:
-            return name
 
     def get_scores(self) -> list[int]:
         """
