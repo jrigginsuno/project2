@@ -3,7 +3,7 @@ from grader import Student
 
 
 class Gui(tk.Tk):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.student = Student()
 
@@ -11,7 +11,7 @@ class Gui(tk.Tk):
         self.container.pack()
         self.__create_widgets()
 
-    def __create_widgets(self):
+    def __create_widgets(self) -> None:
         self.frame = InputFrame(self.container, self)
         self.frame.pack(pady=10)
 
@@ -31,7 +31,7 @@ class Gui(tk.Tk):
             self.frame.label_result.config(fg='green', text='Submitted')
         self.frame.label_result.grid(columnspan=2, row=7)
 
-    def submit(self):
+    def submit(self) -> None:
         try:
             self.student.set_name(self.frame.entry_student.get())
             self.student.set_scores(list(map(lambda x: int(x.get()),
@@ -46,7 +46,7 @@ class Gui(tk.Tk):
 
 
 class InputFrame(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller) -> None:
         super().__init__(parent)
         self.controller = controller
 
