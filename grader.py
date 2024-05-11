@@ -16,21 +16,6 @@ class Grader:
         if num < 0:
             raise ValueError('Negative')
 
-    # def check_attempt_count(self, amount: int) -> None:
-    #     self.check_number(amount)
-    #     if amount < 1 or amount > 4:
-    #         raise ValueError('Out of attempt range')
-    #
-    # def set_attempt_count(self, amount_str: str) -> None:
-    #     # print(type(amount_str))
-    #     amount: int = int(amount_str)
-    #     self.check_attempt_count(amount)
-    #     self.__attempts = amount
-    #     # print(self.__attempts)
-    #
-    # def get_attempt_count(self) -> int:
-    #     return self.__attempts
-
     def check_score(self, score: int) -> None:
         self.check_number(score)
         if score > 100:

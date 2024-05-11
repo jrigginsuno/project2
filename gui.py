@@ -57,28 +57,6 @@ class Gui(tk.Tk):
             self.frame.clear_entries()
             self.show_result()
 
-    # Still Keeps these just in case
-    # def submit_form(self):
-    #     self.submit_score()
-    #     self.submit_name()
-    #
-    # def submit_score(self):
-    #     try:
-    #         for _ in range(self.entry.get_attempt_count()):
-    #             self.entry.set_score_value(self.frame.entry_scores[_].get(), _)
-    #     except ValueError:
-    #         self.show_result('Value of Scores must be between 0 and 100', 1)
-    #
-    # def submit_name(self):
-    #     try:
-    #         self.entry.set_name(self.frame.entry_student.get())
-    #     except ValueError:
-    #         self.show_result('Name must be entered', 1)
-
-# class MainFrame(tk.Frame):
-# 	def __init__(self, parent, controller):
-# 		super().__init__(parent)
-
 
 class InputFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -118,9 +96,6 @@ class InputFrame(tk.Frame):
             self.label_scores[_].grid_remove()
             self.entry_scores[_].grid_remove()
 
-        # This uses old self.controller.submit_form() method
-        # self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit_form())
-
         self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit())
 
         self.button_submit.grid(columnspan=2, row=6)
@@ -131,9 +106,11 @@ class InputFrame(tk.Frame):
 
     def get_attempts(self) -> int:
         """
-        Method to return the amount of attempts taken if input is valid.
+        Returns the amount of attempts taken if given input is valid.
+
         :return: The amount of attempts taken.
         """
+
         try:
             num: int = int(self.__num_attempts.get())
             if num < 1 or num > 4:
@@ -166,6 +143,7 @@ class InputFrame(tk.Frame):
         Method to get the name of student from entry.
         :return: Name of student.
         """
+
         name: str = self.entry_student.get()
         if not name:
             raise ValueError('Name is empty')
@@ -177,6 +155,7 @@ class InputFrame(tk.Frame):
         Method to get scores from entries and return that as a list.
         :return: List of integers of scores.
         """
+
         try:
             scores: list[int] = []
             for _ in range(self.get_attempts()):
@@ -192,6 +171,7 @@ class InputFrame(tk.Frame):
         Method that clears all entry boxes
         :return:
         """
+
         self.__num_attempts.set('')
         self.entry_student.delete(0, 'end')
         for _ in self.entry_scores:
@@ -200,4 +180,5 @@ class InputFrame(tk.Frame):
 
 class ResultPage(tk.Frame):
     def __init__(self, parent, controller):
+
         super().__init__(parent)
