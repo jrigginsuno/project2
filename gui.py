@@ -72,15 +72,15 @@ class InputFrame(tk.Frame):
 
         self.label_scores: list[tk.Label] = []
         self.entry_scores: list[tk.Entry] = []
-        for _ in range(4):
-            self.label_scores.append(tk.Label(self, text=f'Score {_+1}:'))
+        for i in range(4):
+            self.label_scores.append(tk.Label(self, text=f'Score {i+1}:'))
             self.entry_scores.append(tk.Entry(self))
 
-            self.label_scores[_].grid(column=0, row=_+2)
-            self.entry_scores[_].grid(column=1, row=_+2)
+            self.label_scores[i].grid(column=0, row=i+2)
+            self.entry_scores[i].grid(column=1, row=i+2)
 
-            self.label_scores[_].grid_remove()
-            self.entry_scores[_].grid_remove()
+            self.label_scores[i].grid_remove()
+            self.entry_scores[i].grid_remove()
 
         self.button_submit = tk.Button(self, text='Submit', command=lambda: self.controller.submit())
 
@@ -132,9 +132,9 @@ class InputFrame(tk.Frame):
 
         try:
             scores: list[int] = []
-            for _ in range(self.get_attempts()):
-                scores.append(int(self.entry_scores[_].get()))
-                if scores[_] < 0 or scores[_] > 100:
+            for i in range(self.get_attempts()):
+                scores.append(int(self.entry_scores[i].get()))
+                if scores[i] < 0 or scores[i] > 100:
                     raise ValueError
             return scores
         except ValueError:
@@ -144,5 +144,5 @@ class InputFrame(tk.Frame):
         """Method that clears all entry boxes"""
         self.__num_attempts.set('')
         self.entry_student.delete(0, 'end')
-        for _ in self.entry_scores:
-            _.delete(0, 'end')
+        for i in self.entry_scores:
+            i.delete(0, 'end')
