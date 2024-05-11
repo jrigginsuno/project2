@@ -34,10 +34,6 @@ class Gui(tk.Tk):
             self.frame.label_result.config(fg='green', text='Submitted')
         self.frame.label_result.grid(columnspan=2, row=7)
 
-    def clear_result(self):
-        self.frame.label_result.config(fg='red')
-        self.frame.label_result.grid_remove()
-
     def submit(self):
         try:
             self.student.set_name(self.frame.entry_student.get())
