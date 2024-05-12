@@ -3,7 +3,14 @@ from grader import Student
 
 
 class Gui(tk.Tk):
+    """
+    A class representing details for a Gui object.
+    """
+
     def __init__(self) -> None:
+        """
+        Method to set default values of a Gui object.
+        """
         super().__init__()
         self.title('Grader')
         self.geometry('300x200')
@@ -15,19 +22,19 @@ class Gui(tk.Tk):
         self.__create_widgets()
 
     def __create_widgets(self) -> None:
+        """
+        Method to create tkinter widgets
+        """
         self.frame = InputFrame(self.container, self)
         self.frame.pack(pady=10)
 
     def show_result(self, error: Exception = None) -> None:
         """
         Method to show if given user inputs are valid.
-
         If this method is called with no argument no error will be displayed and will have green text
         If there is a given argument that exception will be displayed with red text.
-        :param error: Value of an exception. Default is none
-        :return:
+        :param error: Value of an exception. Default is none.
         """
-
         if error:
             self.frame.label_result.config(fg='red', text=str(error))
         else:
@@ -35,6 +42,9 @@ class Gui(tk.Tk):
         self.frame.label_result.grid(columnspan=2, row=7)
 
     def submit(self) -> None:
+        """
+        Method to submit values to be saved to Student object.
+        """
         try:
             self.student.set_name(self.frame.entry_student.get())
             self.student.set_scores(list(map(lambda x: x.get(),  # It could be worse
@@ -49,7 +59,14 @@ class Gui(tk.Tk):
 
 
 class InputFrame(tk.Frame):
+    """
+    Class used to represent the frame used for input.
+    """
+
     def __init__(self, parent, controller) -> None:
+        """
+        Method to set default values of an InputFrame object.
+        """
         super().__init__(parent)
         self.controller = controller
 
@@ -59,6 +76,9 @@ class InputFrame(tk.Frame):
         self.__create_widgets()
 
     def __create_widgets(self) -> None:
+        """
+        Method to create tkinter widgets.
+        """
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
 
@@ -76,11 +96,11 @@ class InputFrame(tk.Frame):
         self.label_scores: list[tk.Label] = []
         self.entry_scores: list[tk.Entry] = []
         for i in range(4):
-            self.label_scores.append(tk.Label(self, text=f'Score {i+1}:'))
+            self.label_scores.append(tk.Label(self, text=f'Score {i + 1}:'))
             self.entry_scores.append(tk.Entry(self))
 
-            self.label_scores[i].grid(column=0, row=i+2)
-            self.entry_scores[i].grid(column=1, row=i+2)
+            self.label_scores[i].grid(column=0, row=i + 2)
+            self.entry_scores[i].grid(column=1, row=i + 2)
 
             self.label_scores[i].grid_remove()
             self.entry_scores[i].grid_remove()
@@ -95,11 +115,9 @@ class InputFrame(tk.Frame):
 
     def get_attempts(self) -> int:
         """
-        Returns the amount of attempts taken if given input is valid.
-
-        :return: The amount of attempts taken.
+        Method to access value of attempts.
+        :return: Number of attempts.
         """
-
         try:
             num: int = int(self.__num_attempts.get())
             if num < 1 or num > 4:
@@ -113,11 +131,8 @@ class InputFrame(tk.Frame):
         """
         Dynamically adds label and entry to grid depending on the number of attempts given.
         If attempts are invalid all grid items are removed.
-
         :param args:
-        :return:
         """
-
         try:
             for label, entry, _ in zip(self.label_scores, self.entry_scores, range(self.get_attempts())):
                 label.grid()
@@ -132,7 +147,6 @@ class InputFrame(tk.Frame):
         Method to get scores from entries and return that as a list.
         :return: List of integers of scores.
         """
-
         try:
             scores: list[int] = []
             for i in range(self.get_attempts()):
@@ -144,7 +158,9 @@ class InputFrame(tk.Frame):
             raise ValueError('Scores needs to be a number between 0 and 100')
 
     def clear_entries(self) -> None:
-        """Method that clears all entry boxes"""
+        """
+        Method to clear all entry boxes.
+        """
         self.__num_attempts.set('')
         self.entry_student.delete(0, 'end')
         for i in self.entry_scores:

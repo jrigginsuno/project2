@@ -3,38 +3,48 @@ import csv
 
 
 class Student:
+    """
+    A class representing details for a Student object.
+    """
     def __init__(self) -> None:
-        """Method to set default values"""
+        """
+        Method to set default values of a student object.
+        """
         self.__name: str = ''
-        self.__attempts: int = 0
         self.__scores: list[int] = [0] * 4
 
         # Check if file.csv already exists
         self.__file_exists: bool = os.path.isfile('file.csv')
 
     def get_name(self) -> str:
-        """Getter method for name."""
+        """
+        Method to access student's name.
+        :return: Student's name.
+        """
         return self.__name
 
     def set_name(self, name: str) -> None:
-        """Setter method for name."""
+        """
+        Method to access student's name.
+        :param name: New name.
+        """
         if name:
             self.__name = name
         else:
             raise ValueError('Name is empty')
 
     def get_scores(self) -> list[int]:
-        """Getter method for scores."""
+        """
+        Method to access student's scores.
+        :return: Student's scores.
+        """
         return self.__scores
 
     def set_scores(self, scores: list[str | int]) -> None:
         """
-        Setter method for scores.
-
-        Takes in list of strings and cast each element to int
-        :param scores: List of strings to be converted to int and then stored to scores
+        Method to modify a student's score.
+        :param scores: New scores.
         """
-
         try:
             scores = list(map(lambda x: int(x), scores))
 
@@ -46,12 +56,16 @@ class Student:
             raise ValueError('Attempts needs to be a number between 0 and 100')
 
     def clear(self) -> None:
-        """Set variables back to default values"""
+        """
+        Method to set variables back to default values.
+        """
         self.__name = ''
-        self.__attempts = 0
         self.__scores = [0] * 4
 
     def enter_grade(self) -> None:
+        """
+        Method to write values of a student into list and writes that as a row in a csv file.
+        """
         with open('file.csv', 'a', newline='') as csvfile:
             content = csv.writer(csvfile)
 
